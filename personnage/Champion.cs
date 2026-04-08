@@ -3,19 +3,13 @@ public abstract class Champion
     public string Nom{get; set;}
     public int Force{get; set;}
     protected int _PV;
-
     public int Nv{get; set;}
-
-
+    public int Defense;
     public int ChampionsCost{get; set;}
-
-    public int portée{get; set;}
-
-    public int degat{get; set;}
-
+    public int Portée{get; set;}
+    public int Degat{get; set;}
     public int X{get; set;} //gerer les coordonnées du joueur
     public int Y{get; set;}
-
     public int PV
     {
         get {return _PV ;}
@@ -39,6 +33,7 @@ public abstract class Champion
         this.Force = force;
         this.PV = pv;
         this.Nv = 1;
+        this.Defense= 10;
     }
     public bool EstMort
     {
@@ -58,28 +53,29 @@ public abstract class Champion
         int dx = cible.X - this.X;
         int dy = cible.Y - this.Y;
         int distance = (dx * dx) + (dy * dy);
-        int portee = this.portée * this.portée; //on met tout au carré pour eviter l'operation avec la racine 
+        int portee = this.Portée * this.Portée; //on met tout au carré pour eviter l'operation avec la racine(trop couteuse en calcul) 
         if (distance <= portee)
         {
-            int degat;
             if(Nv ==1)
             {
-                this.degat = Force;
+                this.Degat = Force;
             }
             else if (Nv == 2)
             {
-                this.degat = 2*Force;
+                this.Degat = 2*Force;
 
             }
             else if (Nv == 3)
             {
-                this.degat = 10*Force;
+                this.Degat = 10*Force;
             }
-            Console.WriteLine($"{this.Nom} attaque violemment {cible.Nom}et lui inflige {this.degat} dégats" );
-            cible.PV -= this.degat;
+            Console.WriteLine($"{this.Nom} attaque violemment {cible.Nom}et lui inflige {this.Degat} dégats" );
+            cible.PV -= this.Degat;
         }
     }
-
+    public virtual void CompetencesClass(Champion cible)
+    {
+    }
 
 
 }
