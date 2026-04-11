@@ -1,12 +1,12 @@
 public abstract class Guard : Champion
 {
-    public Guard(string Nom, int force, int pv) : base(Nom, force, pv)
+    public Guard(string Nom, int force, int pv, int defense, int cost, Origin origine,int portée) : base(Nom, force, pv,defense,cost,origine,portée)
     {
-        this.Defense = 50;
+    }
+    public override void CompetencesClass(Champion cible)
+    {
+        base.CompetencesClass(cible); //pour l'instant de ne fait rien a determiner 
     }
 
-    public virtual void SeProteger(Champion cible)
-    {
-        //implementer une fonction qui permet de se proteger pendant 2 attaques 
-    }
+
 }
