@@ -10,6 +10,10 @@ public abstract class Champion
     public int Degat{get; set;}
     public int X{get; set;} //gerer les coordonnées du joueur
     public int Y{get; set;}
+    public ResourceBar resourceBar {get;set;}
+
+
+    public Origin Origine{get;set;}
     public int PV
     {
         get {return _PV ;}
@@ -27,13 +31,16 @@ public abstract class Champion
         }
     }
 
-    public Champion(string nom, int force, int pv)
+    public Champion(string nom, int force, int pv, int defense,int cost,Origin origine,int portée)
     {
         this.Nom = nom;
         this.Force = force;
         this.PV = pv;
         this.Nv = 1;
-        this.Defense= 10;
+        this.Defense= defense;
+        this.ChampionsCost = cost;
+        this.Portée = portée;
+        this.Origine = origine;
     }
     public bool EstMort
     {

@@ -1,2 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿Lulu lulu = new Lulu();
+lulu.resourceBar.AfficherResourceBar();
+
+
+Garen garen = new Garen();
+garen.resourceBar.AfficherResourceBar();
