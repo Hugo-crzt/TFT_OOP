@@ -80,8 +80,13 @@ public abstract class Champion
             cible.PV -= this.Degat;
         }
     }
-    public virtual void CompetencesClass(Champion cible)
+    public virtual void CompetencesClass(Champion cible) 
     {
+    }
+
+    public virtual char GetSymbol()
+    {
+        return 'b';
     }
 
 

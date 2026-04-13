@@ -4,4 +4,8 @@ public class Garen : Guard
     {
         this.resourceBar = new ResourceBar(ResourceBar.ResourceType.Mana,50,130);        
     }
+    public override char GetSymbol()
+    {
+        return 'G';
+    }
 }

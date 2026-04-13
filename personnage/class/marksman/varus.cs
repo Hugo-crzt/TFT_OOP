@@ -5,4 +5,8 @@ public class Varus : MarksMan
         this.resourceBar = new ResourceBar(ResourceBar.ResourceType.Mana,15,85);        
     }
     
+    public override char GetSymbol()
+    {
+        return 'V';
+    }
 }

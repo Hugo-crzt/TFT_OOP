@@ -4,4 +4,8 @@ public class Ashe : MarksMan
     {
         this.resourceBar = new ResourceBar(ResourceBar.ResourceType.Mana,20,80);        
     }
+    public override char GetSymbol()
+    {
+        return 'a';
+    }
 }
