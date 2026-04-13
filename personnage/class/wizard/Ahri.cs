@@ -4,4 +4,8 @@ public class Arhi : Wizard
     {
         this.resourceBar = new ResourceBar(ResourceBar.ResourceType.Mana,0,30);        
     }
+    public override char GetSymbol()
+    {
+        return 'à';
+    }
 }

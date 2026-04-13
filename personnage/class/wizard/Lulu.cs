@@ -6,4 +6,8 @@ public class Lulu : Wizard
     {
         this.resourceBar = new ResourceBar(ResourceBar.ResourceType.Mana,10,55);        
     }
+    public override char GetSymbol()
+    {
+        return 'L';
+    }
 }

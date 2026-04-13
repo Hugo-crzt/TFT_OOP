@@ -4,4 +4,9 @@ public class Zed : Assassin
     {
         this.resourceBar = new ResourceBar(ResourceBar.ResourceType.Mana,30,50);        
     }      
+
+    public override char GetSymbol()
+    {
+        return 'Z';
+    }
 }

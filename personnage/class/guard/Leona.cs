@@ -4,4 +4,9 @@ public class Leona : Guard
     {
         this.resourceBar = new ResourceBar(ResourceBar.ResourceType.Mana,70,120);          
     }
+
+    public override char GetSymbol()
+    {
+        return 'L';
+    }
 }
