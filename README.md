@@ -13,3 +13,9 @@ avant de penser a cela les prochaines choses a faire sont de créer les differen
 -tous les constructeurs ont étés mis en place maintenant 
 -il faut mettre en place les differentes manières d'attaquer pour les personnages 
 -mettre en place les différentes synergies et pour le moment l'adapter au fait qu'on est uniquement deux personnages par classe et par origine 
+
+15/05/2026:
+
+-la map et l'actualisations du nombres uniques de personnages de certaines origines ont etes mis en place 
+-la creation du banc a été faite 
+-il faudrait maintenant mettre en place le shop pour pouvoir acheter des champions et les mettre sur le banc (pourquoi pas le faire avec Type T )

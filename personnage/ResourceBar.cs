@@ -12,9 +12,10 @@ public class ResourceBar
         this.Value = initialValue;
         this.MaxValue = maxValue;
     }
+
     public void AfficherResourceBar()
     {
-        Console.Write("\n---barre de resource : ");
+        Console.Write("\n---barre de mana : ");
         for(int i = 0; i < this.MaxValue; i++)
         {
             if (i <= this.Value)
