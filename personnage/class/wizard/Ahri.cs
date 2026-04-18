@@ -8,4 +8,28 @@ public class Arhi : Wizard
     {
         return 'à';
     }
+    public override void UpgradeStats()
+    {
+        if(this.Nv == 2)
+        {
+            this._baseForce = 45;
+            this._basePVMax = 1170;
+            this.PV = this._basePVMax;
+
+        }
+        else if(this.Nv == 3)
+        {
+            this._baseForce = 68;
+            this._basePVMax = 2106;
+            this.PV = this._basePVMax;
+
+        }
+        else if(this.Nv == 4)
+        {
+            this._baseForce = 102;
+            this._basePVMax = 3790;  
+            this.PV = this._basePVMax;
+          
+        }
+    }
 }

@@ -4,9 +4,5 @@ public abstract class Assassin : Champion
     {
     }
 
-    public override void CompetencesClass(Champion cible)
-    {
-        //implementer une fonction qui va couter tant de mana et qui permet a l'assassin de se rapprocher d'attaquer puis de reculer 
-    }
 
 }

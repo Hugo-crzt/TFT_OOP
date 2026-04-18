@@ -5,10 +5,7 @@ public abstract class MarksMan : Champion
        this.Portée = 4; //pour l'instant on laisse car les deux persos ont 4 de portée  
     }
     
-    public override void CompetencesClass(Champion cible)
-    {
-        //implementer les differents avantages 
-    }
+
 
     
 }

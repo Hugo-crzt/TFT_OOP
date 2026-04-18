@@ -9,7 +9,8 @@ public class Noble : Origin
                 // On ne booste que ceux qui appartiennent à cette origine
                 if (c.Origine is Noble) 
                 {
-                    c.Speed ++;
+                    c.Defense+= 30;
+                    Console.WriteLine($"Boost de defense de 30 appliqué à {c.Nom} !");
                 }
             }
         }

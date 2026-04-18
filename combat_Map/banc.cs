@@ -48,4 +48,15 @@ public class Banc
             throw new GameRuleException($"Votre banc est plein !!!! Veuillez vendre certains de vos champions pour liberer de l'espace sur votre banc .");
         }
     }
+    public void RemoveFromBanc(Champion cible)
+    {
+        for (int i = 0; i < _banc.GetLength(0); i++)
+        {
+            if (_banc[i, 0] == cible)
+            {
+                _banc[i, 0] = null; // On libère la place
+                return; 
+            }
+        }
+    }
 }

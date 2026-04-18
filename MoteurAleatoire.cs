@@ -1,9 +1,10 @@
 public static class MoteurAleatoire
 {
-    public static T TirerAuSort<T>(List<T> liste)
+    private static Random rnd = new Random(); // On le met en dehors pour plus d'efficacité
+
+    public static Champion TirerAuSort(List<Champion> liste)
     {
-        Random rnd = new Random();
-        T randomItem = liste[rnd.Next(liste.Count)];
-        return randomItem;
+        Champion randomItem = liste[rnd.Next(liste.Count)];
+        return randomItem.Clone(); // On renvoie une COPIE, pas l'original
     }
 }

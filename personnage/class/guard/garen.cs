@@ -8,4 +8,22 @@ public class Garen : Guard
     {
         return 'G';
     }
+
+    public override void UpgradeStats()
+    {
+        if(this.Nv == 2)
+        {
+            this._baseForce = 98;
+            this._basePVMax = 2160;
+            this.PV = this._basePVMax;
+
+        }
+        else if(this.Nv == 3)
+        {
+            this._baseForce = 147;
+            this._basePVMax = 3888;
+            this.PV = this._basePVMax;
+
+        }
+    }
 }
