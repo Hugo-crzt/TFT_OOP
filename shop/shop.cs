@@ -1,112 +1,114 @@
-public class Shop
-{
-    public List<Champion> ListeDeTousLesChampions = new List<Champion>();
-    public List<Champion> ListeShop = new List<Champion>();
-
-    public void definirChampion()
+    public class Shop
     {
-        ListeDeTousLesChampions.Add(new Akali());
-        ListeDeTousLesChampions.Add(new Zed());
-        ListeDeTousLesChampions.Add(new Garen());
-        ListeDeTousLesChampions.Add(new Leona());
-        ListeDeTousLesChampions.Add(new Ashe());
-        ListeDeTousLesChampions.Add(new Varus());
-        ListeDeTousLesChampions.Add(new Arhi());
-        ListeDeTousLesChampions.Add(new Lulu());
-    }
-    public void ActualiserShop()
-    {
+        public List<Champion> ListeDeTousLesChampions = new List<Champion>();
+        public List<Champion> ListeShop = new List<Champion>();
 
-        ListeShop.Clear();
-        for(int i = 0; i < 4; i++)
+        public void definirChampion()
         {
-            ListeShop.Add(MoteurAleatoire.TirerAuSort(ListeDeTousLesChampions));
+            ListeDeTousLesChampions.Add(new Akali());
+            ListeDeTousLesChampions.Add(new Zed());
+            ListeDeTousLesChampions.Add(new Garen());
+            ListeDeTousLesChampions.Add(new Leona());
+            ListeDeTousLesChampions.Add(new Ashe());
+            ListeDeTousLesChampions.Add(new Varus());
+            ListeDeTousLesChampions.Add(new Arhi());
+            ListeDeTousLesChampions.Add(new Lulu());
         }
-    }
-
-    //faire pour actualiser un seul champion
-    public void ActualiserAchat()
-    {
-        for (int i = 0; i < ListeShop.Count; i++)
+        public void ActualiserShop()
         {
-            if(ListeShop[i] == null)
+
+            ListeShop.Clear();
+            for(int i = 0; i < 4; i++)
             {
-                ListeShop[i] = MoteurAleatoire.TirerAuSort(ListeDeTousLesChampions);
+                ListeShop.Add(MoteurAleatoire.TirerAuSort(ListeDeTousLesChampions));
             }
         }
-    }
 
-    public void acheterChampion(Banc banc, int choix)
-    {
-        choix-- ; //pour avoir le bon index 
-        if(GameManager.Money >= ListeShop[choix].ChampionsCost)
+        //faire pour actualiser un seul champion
+        public void ActualiserAchat()
         {
-                banc.PlaceChampionBanc(ListeShop[choix]);
-                GameManager.Money -= ListeShop[choix].ChampionsCost; 
-                ListeShop[choix] = null; 
-                ActualiserAchat();
-                displayShop();               
-        }
-        else
-        {
-            throw new GameFundsException($"vous n'avez pas assez d'argent pour acheter {ListeShop[choix].Nom}");
-        }
-
-    }
-
-    public void ChoixShop(Banc banc)
-    {
-        bool check = false;
-        Console.WriteLine("choisissez un champion a acheter ou quittez ");
-        while(check == false){
-            string saisie = Console.ReadLine();
-            if (int.TryParse(saisie, out int choix))
+            for (int i = 0; i < ListeShop.Count; i++)
             {
-                choix -= 1;
-                if (choix == 4)
+                if(ListeShop[i] == null)
                 {
-                    return;
+                    ListeShop[i] = MoteurAleatoire.TirerAuSort(ListeDeTousLesChampions);
                 }
-                if(choix<ListeShop.Count && choix >= 0)
-                {
-                    try
-                    {
-                        acheterChampion(banc, choix);
-                        ActualiserShop();
-                        check = true;                        
-                    }
-                    catch (GameRuleException)
-                    {
-                        Console.WriteLine("vous n'avez pas de place sur le banc");
-                    }
-                    catch (GameFundsException)
-                    {
-                        Console.WriteLine("vous n'avez pas assez de sous");
-                    }
+            }
+        }
 
-                }
+        public void acheterChampion(Banc banc, int choix,Map map)
+        {
+            choix-- ; //pour avoir le bon index 
+            if(GameManager.Money >= ListeShop[choix].ChampionsCost)
+            {
+                    banc.PlaceChampionBanc(ListeShop[choix]);
+                    GameManager.Money -= ListeShop[choix].ChampionsCost; 
+                    Fusion.fusionnerChampion(ListeShop[choix],map.ListeChampion,banc.ListeChampionBanc, map, banc);
+                    ListeShop[choix] = null; 
+                    ActualiserAchat();
+                    displayShop();               
             }
             else
             {
-                Console.WriteLine("Veuillez saisir un nombre valide");
+                throw new GameFundsException($"vous n'avez pas assez d'argent pour acheter {ListeShop[choix].Nom}");
+            }
+
+        }
+
+        public void ChoixShop(Banc banc,Map map)
+        {
+            bool check = false;
+            Console.WriteLine("choisissez un champion a acheter ou quittez ");
+            while(check == false){
+                string saisie = Console.ReadLine();
+                if (int.TryParse(saisie, out int choix))
+                {
+                    choix -= 1;
+                    if (choix == 4)
+                    {
+                        return;
+                    }
+                    if(choix<ListeShop.Count && choix >= 0)
+                    {
+                        try
+                        {
+                            acheterChampion(banc, choix, map);
+                            ActualiserShop();
+                            check = true;                        
+                        }
+                        catch (GameRuleException)
+                        {
+                            Console.WriteLine("vous n'avez pas de place sur le banc");
+                        }
+                        catch (GameFundsException)
+                        {
+                            Console.WriteLine("vous n'avez pas assez de sous");
+                        }
+
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Veuillez saisir un nombre valide");
+                }
             }
         }
-    }
 
 
-    public void displayShop()
-    {
-        Console.WriteLine("\n-----SHOP-----");
-        foreach(Champion champ in ListeShop)
+        public void displayShop()
         {
-            Console.Write($"--- {champ.Nom} : {champ.ChampionsCost} ---");
+            Console.WriteLine("\n-----SHOP-----");
+            foreach(Champion champ in ListeShop)
+            {
+                Console.Write($"--- {champ.Nom} : {champ.ChampionsCost} ---");
+            }
+            Console.WriteLine("\n--------------");
         }
-        Console.WriteLine("\n--------------");
-    }
 
-    public Shop()
-    {
-        definirChampion();
-        ActualiserShop();
+        public Shop()
+        {
+            definirChampion();
+            ActualiserShop();
+        }
+        
     }
-}

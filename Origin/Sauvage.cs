@@ -9,7 +9,8 @@ public class Sauvage : Origin
                 // On ne booste que ceux qui appartiennent à cette origine
                 if (c.Origine is Sauvage) 
                 {
-                    c.Speed ++;
+                    c.Force +=40;
+                    Console.WriteLine($"Boost d'attaque de 40 appliqué à {c.Nom} !");
                 }
             }
         }

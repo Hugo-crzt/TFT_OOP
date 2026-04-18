@@ -25,3 +25,8 @@ avant de penser a cela les prochaines choses a faire sont de créer les differen
 -j'ai aussi mis en place les bonus des origines et leur actualisation, il faut les specifier maintenant car tous ont le meme bonus 
 
 -pour la suite il faut implementer le systeme de niveau apres avoir fini les synergies.
+
+18/05/2026(encore):
+-tous les bonus de stats ont été mis en place ainsi que le systeme de niveau 
+-maintenant il faut implémenter le systeme d'attaque 
+-il faudra aussi implementer les objets avec les interfaces 

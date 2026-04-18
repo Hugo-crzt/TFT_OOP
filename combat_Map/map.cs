@@ -83,6 +83,7 @@ public class Map
         {
             Console.WriteLine($"vous ne pouvez pas enlever {cible.Nom} car le banc est plein.");
         }
+        ActualiserNbOrigin(ListeChampion);
          
         
     }
@@ -134,6 +135,10 @@ public class Map
         Ninja.BonusOrigin(ListeChampion);
     }
 
+    public Champion[,] GetTabMap()
+    {
+        return _map;
+    }
 
 
 } 

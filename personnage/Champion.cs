@@ -1,38 +1,40 @@
 public abstract class Champion
 {
     public string Nom{get; set;}
-    public int Force{get; set;}
-    protected int _PV;
     public int Nv{get; set;}
     public int Defense;
     public int Speed;
-    private int _baseForce;
-    private int _baseDefense;
-    private int _basePVMax;
+    protected int _baseForce;
+    protected int _baseDefense;
+    protected int _basePVMax;
     public int ChampionsCost{get; set;}
     public int Portée{get; set;}
     public int Degat{get; set;}
+    public int Esquive;
     public int X{get; set;} //gerer les coordonnées du joueur
     public int Y{get; set;}
-    public ResourceBar resourceBar {get;set;}
+    public ResourceBar? resourceBar {get;set;} //le ? est fait pour ignorer le fait qu'on puisse avoir une valeur nulle 
 
 
     public Origin Origine{get;set;}
-    public int PV
+
+    protected int _pvActuels;
+
+    public int PV 
     {
-        get {return _PV ;}
-        set
+        get => _pvActuels;
+        set 
         {
-            if(value < 0)
-            {
-                _PV = 0 ; 
-                Console.WriteLine("le personnage est ko");
-            }
-            else
-            {
-                _PV = value;
-            }
+            _pvActuels = value;
+            if (_pvActuels > PVMax) _pvActuels = PVMax; // Empêche de soigner plus que le max
+            if (_pvActuels < 0) _pvActuels = 0;
         }
+    }
+
+    public int PVMax 
+    {
+        get => _basePVMax;
+        set => _basePVMax = value;
     }
 
     public Champion(string nom, int force, int pv, int defense,int cost,Origin origine,int portée)
@@ -46,13 +48,14 @@ public abstract class Champion
         this.Portée = portée;
         this.Origine = origine;
         this.Speed = 1;
+        this.Esquive = 0;
 
         ResetStats();
     }
     public bool EstMort
     {
         get{
-            if (this._PV <= 0){
+            if (this._pvActuels <= 0){
                 return true;
             } 
             else
@@ -60,6 +63,11 @@ public abstract class Champion
                 return false;
             }
         }
+    }
+    public int Force 
+    {
+        get => _baseForce; 
+        set => _baseForce = value;
     }
 
     public virtual void Attaquer(Champion cible)
@@ -87,9 +95,8 @@ public abstract class Champion
             cible.PV -= this.Degat;
         }
     }
-    public virtual void CompetencesClass(Champion cible) 
-    {
-    }
+
+
 
     public virtual char GetSymbol()
     {
@@ -102,6 +109,16 @@ public abstract class Champion
         this.Defense = _baseDefense;
         this.PV = _basePVMax;
         this.Speed = 1;
+    }
+    public Champion Clone()
+    {
+        // MemberwiseClone crée une copie superficielle de l'objet
+        return (Champion)this.MemberwiseClone();
+    }
+
+    public virtual void UpgradeStats()
+    {
+
     }
 
 

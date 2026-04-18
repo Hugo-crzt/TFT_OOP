@@ -9,4 +9,22 @@ public class Varus : MarksMan
     {
         return 'V';
     }
+
+    public override void UpgradeStats()
+    {
+        if(this.Nv == 2)
+        {
+            this._baseForce = 90;
+            this._basePVMax = 1620;
+            this.PV = this._basePVMax;
+
+        }
+        else if(this.Nv == 3)
+        {
+            this._baseForce = 135;
+            this._basePVMax = 2916;
+            this.PV = this._basePVMax;
+
+        }
+    }
 }

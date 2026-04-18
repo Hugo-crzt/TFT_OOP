@@ -2,7 +2,7 @@ public class Elfe : Origin
 {
     public static void BonusOrigin(List<Champion> champions)
     {
-        Console.WriteLine($"Vérification Elfe : nb = {GameManager.nbElfe}"); // DEBUG
+        Console.WriteLine($"Nombre d'Elfe : {GameManager.nbElfe}"); // DEBUG
         if (GameManager.nbElfe >= 2) // Ton palier
         {
             foreach(Champion c in champions)
@@ -10,8 +10,11 @@ public class Elfe : Origin
                 // On ne booste que ceux qui appartiennent à cette origine
                 if (c.Origine is Elfe) 
                 {
-                    c.Speed ++;
-                    Console.WriteLine($"Boost appliqué à {c.Nom} ! Nouvelle vitesse : {c.Speed}");
+                    c.Esquive ++ ; 
+                    c.Speed +=2;
+                    Console.WriteLine($"Boost de vitesse de 2 appliqué à {c.Nom} !");
+                    Console.WriteLine($"Boost d'ésquive de 1 appliqué à {c.Nom} !");
+
                 }
             }
         }
