@@ -5,6 +5,10 @@ public abstract class Champion
     protected int _PV;
     public int Nv{get; set;}
     public int Defense;
+    public int Speed;
+    private int _baseForce;
+    private int _baseDefense;
+    private int _basePVMax;
     public int ChampionsCost{get; set;}
     public int Portée{get; set;}
     public int Degat{get; set;}
@@ -34,13 +38,16 @@ public abstract class Champion
     public Champion(string nom, int force, int pv, int defense,int cost,Origin origine,int portée)
     {
         this.Nom = nom;
-        this.Force = force;
-        this.PV = pv;
+        this._baseForce = force;
+        this._basePVMax = pv;
         this.Nv = 1;
-        this.Defense= defense;
+        this._baseDefense= defense;
         this.ChampionsCost = cost;
         this.Portée = portée;
         this.Origine = origine;
+        this.Speed = 1;
+
+        ResetStats();
     }
     public bool EstMort
     {
@@ -87,6 +94,14 @@ public abstract class Champion
     public virtual char GetSymbol()
     {
         return 'b';
+    }
+
+    public void ResetStats()
+    {
+        this.Force = _baseForce;
+        this.Defense = _baseDefense;
+        this.PV = _basePVMax;
+        this.Speed = 1;
     }
 
 

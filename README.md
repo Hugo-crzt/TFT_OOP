@@ -19,3 +19,9 @@ avant de penser a cela les prochaines choses a faire sont de créer les differen
 -la map et l'actualisations du nombres uniques de personnages de certaines origines ont etes mis en place 
 -la creation du banc a été faite 
 -il faudrait maintenant mettre en place le shop pour pouvoir acheter des champions et les mettre sur le banc (pourquoi pas le faire avec Type T )
+
+18/05/2026:
+-le système de shop a été mis en place 
+-j'ai aussi mis en place les bonus des origines et leur actualisation, il faut les specifier maintenant car tous ont le meme bonus 
+
+-pour la suite il faut implementer le systeme de niveau apres avoir fini les synergies.

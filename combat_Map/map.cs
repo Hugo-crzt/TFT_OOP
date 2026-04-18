@@ -6,17 +6,17 @@ public class Map
     private int _height;
     public List<Champion> ListeChampion = new List<Champion>();
 
-    private Banc _Banc;
+    public Banc Banc;
     
 
     //crée la map
 
     public Map()
     {
-        _width = 6;
-        _height = 7;
+        _width = 7;
+        _height = 6;
         _map = new Champion[_width,_height];
-        _Banc = new Banc();
+        Banc = new Banc();
     }
 
 
@@ -41,7 +41,7 @@ public class Map
 
             Console.WriteLine(); // saut de ligne après chaque ligne
         }
-        _Banc.displayBanc();
+        Banc.displayBanc();
     }
 
     //aficher le banc 
@@ -67,6 +67,7 @@ public class Map
             
         }
         ActualiserNbOrigin(ListeChampion);
+        
 
     }
     //enlever un champion de la zone de jeu 
@@ -74,7 +75,7 @@ public class Map
     {
         try
         {
-            _Banc.PlaceChampionBanc(cible);
+            Banc.PlaceChampionBanc(cible);
             _map[cible.X,cible.Y] = null ;
             ListeChampion.Remove(cible);
         }
@@ -115,8 +116,22 @@ public class Map
                 GameManager.nbNinja++ ; 
             }
         }
+        AppliquerBonus(ListeChampion);
 
         
+    }
+
+    public void AppliquerBonus(List<Champion> unique)
+    {
+        foreach(Champion c in ListeChampion)
+        {
+            c.ResetStats();
+        }
+
+        Elfe.BonusOrigin(ListeChampion);
+        Noble.BonusOrigin(ListeChampion);
+        Sauvage.BonusOrigin(ListeChampion);
+        Ninja.BonusOrigin(ListeChampion);
     }
 
 
