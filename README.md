@@ -30,3 +30,6 @@ avant de penser a cela les prochaines choses a faire sont de créer les differen
 -tous les bonus de stats ont été mis en place ainsi que le systeme de niveau 
 -maintenant il faut implémenter le systeme d'attaque 
 -il faudra aussi implementer les objets avec les interfaces 
+
+21/05/2026:
+-tout a été fait il manque juste la boucle de jeu et le projet est fini

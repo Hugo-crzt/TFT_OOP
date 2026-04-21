@@ -110,5 +110,13 @@
             definirChampion();
             ActualiserShop();
         }
+        public void VendreChampion(Champion cible, List<Champion> championMap, List<Champion> championBanc, Map map, Banc banc)
+        {
+            GameManager.Money += cible.ChampionsCost;
+            
+            Fusion.SupprimerChampionPhysiquement(cible, championMap, championBanc, map, banc);
+            
+            Console.WriteLine($"{cible.Nom} a été vendu pour {cible.ChampionsCost} pièces.");
+        }
         
     }
