@@ -10,8 +10,9 @@ public class Elfe : Origin
                 if (c.Origine is Elfe) 
                 {
                     c.Esquive ++ ; 
-                    c.Speed +=2;
+                    c.Speed ++;
                     Console.WriteLine($"Boost d'ésquive de 1 appliqué à {c.Nom} !");
+                    Console.WriteLine($"Boost de vitesse de 1 appliqué à {c.Nom} !");
                     System.Threading.Thread.Sleep(1000);
 
 
