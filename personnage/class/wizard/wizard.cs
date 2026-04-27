@@ -7,7 +7,6 @@ public abstract class Wizard : Champion
 
     public virtual void Soigner(Champion cible)
     {
-        // si allié a proximite, soigner et attaquer apres 
     }
 
 
