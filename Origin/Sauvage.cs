@@ -11,6 +11,8 @@ public class Sauvage : Origin
                 {
                     c.Force +=40;
                     Console.WriteLine($"Boost d'attaque de 40 appliqué à {c.Nom} !");
+                    System.Threading.Thread.Sleep(1000);
+
                 }
             }
         }

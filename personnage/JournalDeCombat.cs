@@ -29,6 +29,14 @@ public class JournalDeCombat
 
     public void Link(Champion champion)
     {
+        // On se désabonne d'abord (au cas où il est déjà lié)
+        champion.OnMort -= annoncerDecès;
+        champion.OnAvancer -= déplacer;
+        champion.OnEsquiver -= esquiver;
+        champion.OnSpeed -= speedAttack;
+        champion.OnAttaquer -= displayattack;
+
+        // On s'abonne ensuite
         champion.OnMort += annoncerDecès;
         champion.OnAvancer += déplacer;
         champion.OnEsquiver += esquiver;
@@ -36,5 +44,6 @@ public class JournalDeCombat
         champion.OnAttaquer += displayattack;
     }
 
-    
+
+
 }

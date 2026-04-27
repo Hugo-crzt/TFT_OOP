@@ -39,6 +39,7 @@ public class Banc
                 if(_banc[i,0]== null)
                 {
                     _banc[i,0] = cible;
+                    ListeChampionBanc.Add(cible);
                     return;
                 }
             }
@@ -55,6 +56,7 @@ public class Banc
             if (_banc[i, 0] == cible)
             {
                 _banc[i, 0] = null; // On libère la place
+                ListeChampionBanc.Remove(cible);
                 return; 
             }
         }

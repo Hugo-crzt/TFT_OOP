@@ -3,7 +3,7 @@ using System.Diagnostics;
 public abstract class Champion
 {
     public string Nom{get; set;}
-    public int Nv{get; set;}
+    public int Nv= 1 ;
     public float Defense;
     public int Speed;
     protected float _baseForce;
@@ -17,7 +17,7 @@ public abstract class Champion
     public int Esquive;
     public int X{get; set;} //gerer les coordonnées du joueur
     public int Y{get; set;}
-    public ResourceBar? resourceBar {get;set;} //le ? est fait pour ignorer le fait qu'on puisse avoir une valeur nulle 
+    public ResourceBar resourceBar {get;set;} //le ? est fait pour ignorer le fait qu'on puisse avoir une valeur nulle 
 
 
     public Origin Origine{get;set;}
@@ -157,11 +157,11 @@ public abstract class Champion
         }
     }
 
-    public Champion? TrouverCibleLaPlusProche(List<Champion> ennemis)
+    public Champion TrouverCibleLaPlusProche(List<Champion> ennemis)
     {
         if (ennemis == null || ennemis.Count == 0) return null;
 
-        Champion? cibleLaPlusProche = null;
+        Champion cibleLaPlusProche = null;
         double distanceMin = double.MaxValue;
 
         foreach (var ennemi in ennemis)
@@ -181,8 +181,17 @@ public abstract class Champion
 
         return cibleLaPlusProche;
     }
+    public void afficherStat(Champion cible)
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine($"{cible.Nom} | Force:{cible.Force} | Défense:{cible.Defense} | PV:{cible._basePVMax}");
+        Console.ResetColor();
+    }
 
 
-    //methode a mettre dans joueur dans le futur peut etre 
+
+
+
+
 
 }
