@@ -11,8 +11,9 @@ public class Ninja : Origin
                 {
                     c.Speed ++;
                     c.Esquive +=2 ;
-                    Console.WriteLine($"Boost de vitesse de 1 appliqué à {c.Nom} !");
                     Console.WriteLine($"Boost d'ésquive de 2 appliqué à {c.Nom} !");
+                    System.Threading.Thread.Sleep(1000);
+
                 }
             }
         }

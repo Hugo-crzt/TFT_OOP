@@ -1,122 +1,210 @@
-    public class Shop
+public class Shop
+{
+    public List<Champion> ListeDeTousLesChampions = new List<Champion>();
+    public List<Champion> ListeShop = new List<Champion>();
+
+    public void definirChampion()
     {
-        public List<Champion> ListeDeTousLesChampions = new List<Champion>();
-        public List<Champion> ListeShop = new List<Champion>();
+        ListeDeTousLesChampions.Add(new Akali());
+        ListeDeTousLesChampions.Add(new Zed());
+        ListeDeTousLesChampions.Add(new Garen());
+        ListeDeTousLesChampions.Add(new Leona());
+        ListeDeTousLesChampions.Add(new Ashe());
+        ListeDeTousLesChampions.Add(new Varus());
+        ListeDeTousLesChampions.Add(new Arhi());
+        ListeDeTousLesChampions.Add(new Lulu());
+    }
+    public void ActualiserShop()
+    {
 
-        public void definirChampion()
+        ListeShop.Clear();
+        for(int i = 0; i < 4; i++)
         {
-            ListeDeTousLesChampions.Add(new Akali());
-            ListeDeTousLesChampions.Add(new Zed());
-            ListeDeTousLesChampions.Add(new Garen());
-            ListeDeTousLesChampions.Add(new Leona());
-            ListeDeTousLesChampions.Add(new Ashe());
-            ListeDeTousLesChampions.Add(new Varus());
-            ListeDeTousLesChampions.Add(new Arhi());
-            ListeDeTousLesChampions.Add(new Lulu());
+            ListeShop.Add(MoteurAleatoire.TirerAuSort(ListeDeTousLesChampions));
         }
-        public void ActualiserShop()
-        {
+    }
 
-            ListeShop.Clear();
-            for(int i = 0; i < 4; i++)
+    //actualiser qu'un seul champion quand on achète
+    public void ActualiserAchat()
+    {
+        for (int i = 0; i < ListeShop.Count; i++)
+        {
+            if(ListeShop[i] == null)
             {
-                ListeShop.Add(MoteurAleatoire.TirerAuSort(ListeDeTousLesChampions));
+                ListeShop[i] = MoteurAleatoire.TirerAuSort(ListeDeTousLesChampions);
             }
         }
+    }
 
-        //faire pour actualiser un seul champion
-        public void ActualiserAchat()
+    public void acheterChampion(Banc banc, int choix,Map map)
+    {
+        choix-- ; //pour avoir le bon index 
+        if(GameManager.Money >= ListeShop[choix].ChampionsCost)
         {
-            for (int i = 0; i < ListeShop.Count; i++)
-            {
-                if(ListeShop[i] == null)
-                {
-                    ListeShop[i] = MoteurAleatoire.TirerAuSort(ListeDeTousLesChampions);
-                }
-            }
+                banc.PlaceChampionBanc(ListeShop[choix]);
+                GameManager.Money -= ListeShop[choix].ChampionsCost; 
+                Fusion.fusionnerChampion(ListeShop[choix],map.ListeChampion,banc.ListeChampionBanc, map, banc);
+                ListeShop[choix] = null; 
+                ActualiserAchat();
+                displayShop();               
+        }
+        else
+        {
+            throw new GameFundsException($"vous n'avez pas assez d'argent pour acheter {ListeShop[choix].Nom}");
         }
 
-        public void acheterChampion(Banc banc, int choix,Map map)
+    }
+
+    public void displayShop()
+    {
+        Console.WriteLine("\n----- SHOP (Fortune: " + GameManager.Money + " PO) -----");
+        for (int i = 0; i < ListeShop.Count; i++)
         {
-            choix-- ; //pour avoir le bon index 
-            if(GameManager.Money >= ListeShop[choix].ChampionsCost)
-            {
-                    banc.PlaceChampionBanc(ListeShop[choix]);
-                    GameManager.Money -= ListeShop[choix].ChampionsCost; 
-                    Fusion.fusionnerChampion(ListeShop[choix],map.ListeChampion,banc.ListeChampionBanc, map, banc);
-                    ListeShop[choix] = null; 
-                    ActualiserAchat();
-                    displayShop();               
-            }
+            var champ = ListeShop[i];
+            if (champ != null)
+                Console.Write($"[{i + 1}] {champ.Nom} ({champ.ChampionsCost} PO)  ");
             else
-            {
-                throw new GameFundsException($"vous n'avez pas assez d'argent pour acheter {ListeShop[choix].Nom}");
+                Console.Write($"[{i + 1}] VIDE  ");
+        }
+        Console.WriteLine("\n[R] Refresh (2 PO) | [S] Vendre un champion | [C] Catalogue des champions |[0] Quitter");
+        Console.WriteLine("------------------------------------------");
+    }
+
+    public void ChoixShop(Banc banc, Map map)
+    {
+        bool check = false;
+        while (!check)
+        {
+            map.display(); 
+            banc.displayBanc(); // important de voir son banc avant d'acheter/vendre
+            displayShop(); 
+            
+            Console.WriteLine("Entrez une option :");
+            string saisie = Console.ReadLine()?.ToUpper();
+
+            if (saisie == "0") return;
+
+            // refresh le shop
+            if (saisie == "R") {
+                if (GameManager.Money >= 2) {
+                    GameManager.Money -= 2;
+                    ActualiserShop();
+                } else {
+                    Console.WriteLine("Pas assez d'or !");
+                    System.Threading.Thread.Sleep(1000);
+                }
+                continue;
             }
 
-        }
+            //vendre un perso 
+            if (saisie == "S") {
+                GererInterfaceVente(banc, map);
+                continue;
+            }
+            //afficher le catalogue des perso
+            if (saisie == "C")
+            {
+                AfficherCatalogueComplet();
+            }
 
-        public void ChoixShop(Banc banc,Map map)
-        {
-            bool check = false;
-            Console.WriteLine("choisissez un champion a acheter ou quittez ");
-            while(check == false){
-                string saisie = Console.ReadLine();
-                if (int.TryParse(saisie, out int choix))
+            // acheter un personage 
+            if (int.TryParse(saisie, out int choix))
+            {
+                if (choix >= 1 && choix <= ListeShop.Count && ListeShop[choix-1] != null)
                 {
-                    choix -= 1;
-                    if (choix == 4)
-                    {
-                        return;
+                    try {
+                        acheterChampion(banc, choix, map);
                     }
-                    if(choix<ListeShop.Count && choix >= 0)
-                    {
-                        try
-                        {
-                            acheterChampion(banc, choix, map);
-                            ActualiserShop();
-                            check = true;                        
-                        }
-                        catch (GameRuleException)
-                        {
-                            Console.WriteLine("vous n'avez pas de place sur le banc");
-                        }
-                        catch (GameFundsException)
-                        {
-                            Console.WriteLine("vous n'avez pas assez de sous");
-                        }
-
+                    catch (Exception ex) { 
+                        Console.WriteLine(ex.Message); 
+                        System.Threading.Thread.Sleep(1000); 
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Veuillez saisir un nombre valide");
-                }
             }
         }
+    }
 
+    private void GererInterfaceVente(Banc banc, Map map)
+    {
+        // On récupère tous les champions possédés
+        List<Champion> tousMesChamps = new List<Champion>();
+        tousMesChamps.AddRange(map.ListeChampion);
+        tousMesChamps.AddRange(banc.ListeChampionBanc);
 
-        public void displayShop()
-        {
-            Console.WriteLine("\n-----SHOP-----");
-            foreach(Champion champ in ListeShop)
-            {
-                Console.Write($"--- {champ.Nom} : {champ.ChampionsCost} ---");
-            }
-            Console.WriteLine("\n--------------");
+        if (tousMesChamps.Count == 0) {
+            Console.WriteLine("Vous n'avez aucun champion à vendre !");
+            System.Threading.Thread.Sleep(1000);
+            return;
+        }
+        if (tousMesChamps.Count <= 1) {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n[ERREUR] Impossible de vendre : vous devez garder au moins un champion !");
+            Console.ResetColor();
+            System.Threading.Thread.Sleep(1500);
+            return;
         }
 
-        public Shop()
+        Console.WriteLine("\n--- MODE VENTE (Choisissez le numéro à vendre ou [0] pour annuler) ---");
+        for (int i = 0; i < tousMesChamps.Count; i++)
         {
-            definirChampion();
-            ActualiserShop();
+            var c = tousMesChamps[i];
+            string lieu = map.ListeChampion.Contains(c) ? "Terrain" : "Banc";
+            Console.WriteLine($"[{i + 1}] {c.Nom} (Niv {c.Nv}) - Prix: {c.ChampionsCost} PO | Position: {lieu}");
         }
-        public void VendreChampion(Champion cible, List<Champion> championMap, List<Champion> championBanc, Map map, Banc banc)
+
+        string choixVente = Console.ReadLine();
+        if (int.TryParse(choixVente, out int index) && index > 0 && index <= tousMesChamps.Count)
         {
+            VendreChampion(tousMesChamps[index - 1], map.ListeChampion, banc.ListeChampionBanc, map, banc);
+        }
+    }
+    public Shop()
+    {
+        definirChampion();
+        ActualiserShop();
+    }
+    public void VendreChampion(Champion cible, List<Champion> championMap, List<Champion> championBanc, Map map, Banc banc)
+    {
+        // remboursement en fonction du niveau
+        if (cible.Nv == 1){
             GameManager.Money += cible.ChampionsCost;
-            
-            Fusion.SupprimerChampionPhysiquement(cible, championMap, championBanc, map, banc);
-            
-            Console.WriteLine($"{cible.Nom} a été vendu pour {cible.ChampionsCost} pièces.");
+        }
+        if (cible.Nv == 2)
+        {
+            GameManager.Money = GameManager.Money + cible.ChampionsCost + 2;
+        }
+        if (cible.Nv == 3)
+        {
+            GameManager.Money = GameManager.Money + cible.ChampionsCost + 4; 
         }
         
+        // Suppression physique 
+        Fusion.SupprimerChampionPhysiquement(cible, championMap, championBanc, map, banc);
+        
+        Console.WriteLine($"\n{cible.Nom} a été vendu pour {cible.ChampionsCost} pièces.");
+        System.Threading.Thread.Sleep(1000);
     }
+
+    //pour connaitre les infos de tous les champions dispo
+    public void AfficherCatalogueComplet()
+    {
+        Console.WriteLine("============================================================");
+        Console.WriteLine("             CATALOGUE COMPLET DES CHAMPIONS                ");
+        Console.WriteLine("============================================================\n");
+
+        // On boucle sur la liste des champions
+        foreach (var c in this.ListeDeTousLesChampions)
+        {
+            // On affiche les stats de base de chaque modèle
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write($"{c.Nom,-12}");
+            Console.ResetColor();
+            
+            Console.WriteLine($" | Prix: {c.ChampionsCost} PO | Force: {c.Force} | Def: {c.Defense} | Portée: {c.Portée} | Origine : {c.Origine}");
+        }
+        Console.WriteLine("\n============================================================");
+        Console.WriteLine("Appuyez sur une touche pour fermer le catalogue...");
+        Console.ReadKey();
+    }
+    
+}

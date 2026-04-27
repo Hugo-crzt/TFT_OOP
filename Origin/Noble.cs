@@ -11,6 +11,7 @@ public class Noble : Origin
                 {
                     c.Defense+= 30;
                     Console.WriteLine($"Boost de defense de 30 appliqué à {c.Nom} !");
+                    System.Threading.Thread.Sleep(1000);
                 }
             }
         }

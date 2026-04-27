@@ -1,5 +1,6 @@
     public class Joueur
 {
+    public int PV = 100;
     public List<IConsommable> inventaireJoueur = new List<IConsommable>();
     public void AppliquerLoot(int saisieUtilisateur,Champion cible)
     {
@@ -10,7 +11,7 @@
         if (indexReel >= 0 && indexReel < inventaireJoueur.Count)
         {
             var objet = inventaireJoueur[indexReel];
-            objet.equiper(cible);
+            objet.Consommer(cible);
             inventaireJoueur.RemoveAt(indexReel);
         }
         else

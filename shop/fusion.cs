@@ -12,49 +12,81 @@ public static class Fusion
         
         return total;
     }
+    public static void AfficherStatsFusion(Champion c) {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("\n FUSION RÉUSSIE ! ");
+        Console.WriteLine($"{c.Nom} passe au niveau {c.Nv} !");
+        Console.WriteLine($"Nouveaux PV : {c.PVMax} | Nouvelle Attaque : {c.Force}");
+        Console.ResetColor();
+        Console.ReadKey();
+    }
 
-    public static void fusionnerChampion(Champion cible, List<Champion> championMap, List<Champion> championBanc, Map map, Banc banc)
+    public static void fusionnerChampion(Champion cible, List<Champion> championMap, List<Champion> championBanc, Map map, Banc banc)   
     {
         List<Champion> Total = ObtenirInventaireTotal(championMap, championBanc);
+        // On cherche les doublons de même nom et même niveau
         var doublons = Total.Where(c => c.Nom == cible.Nom && c.Nv == cible.Nv).ToList();
 
         if (doublons.Count >= 3)
-        {
-            Console.WriteLine($"Fusion de {cible.Nom} réussie !");
-            
-            // 1. L'élu monte en niveau
+        {            
+            // 1. On choisit celui qui reste (le survivant)
             Champion survivant = doublons[0];
+            
+            // On mémorise les stats AVANT pour l'affichage
+            float pvAvant = survivant.PVMax;
+            float forceAvant = survivant.Force;
+
+            // 2. Évolution
             survivant.Nv++;
             survivant.UpgradeStats();
 
+            // 3. On supprime physiquement les deux autres
             for (int i = 1; i <= 2; i++)
             {
                 SupprimerChampionPhysiquement(doublons[i], championMap, championBanc, map, banc);
             }
 
-            // 3. RÉCURSIVITÉ : On vérifie si ce nouveau niveau 2 peut fusionner en niveau 3
+            // 4. AFFICHAGE (On utilise 'survivant' car c'est lui qui a les nouvelles stats)
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\n FUSION ! {survivant.Nom} monte au Niveau {survivant.Nv} !");
+            Console.WriteLine($"Stats : PV ({pvAvant} -> {survivant.PVMax}) | ATQ ({forceAvant} -> {survivant.Force})");
+            Console.ResetColor();
+            System.Threading.Thread.Sleep(1000);
             if (survivant.Nv < 3)
             {
                 fusionnerChampion(survivant, championMap, championBanc, map, banc);
             }
         }
     }
-    public static void SupprimerChampionPhysiquement(Champion cible, List<Champion> championMap, List<Champion> championBanc,Map map,Banc banc)
+    public static void SupprimerChampionPhysiquement(Champion cible, List<Champion> championMap, List<Champion> championBanc, Map map, Banc banc)
     {
-        // 1. On vérifie si le champion est sur le plateau
+        var grille = map.GetTabMap();
+        for (int x = 0; x < grille.GetLength(0); x++)
+        {
+            for (int y = 0; y < grille.GetLength(1); y++)
+            {
+                if (grille[x, y] == cible) 
+                {
+                    grille[x, y] = null;
+                }
+            }
+        }
+
+        // 2. NETTOYAGE DES LISTES LOGIQUES
         if (championMap.Contains(cible))
         {
-            // On vide la case dans le tableau 2D de la Map
-            map.GetTabMap()[cible.X, cible.Y] = null;// On le retire de la liste passée en paramètre
             championMap.Remove(cible);
         }
-        // 2. Sinon, on vérifie s'il est sur le banc
-        else if (championBanc.Contains(cible))
+        
+        if (championBanc.Contains(cible))
         {
-            // On appelle ta méthode pour vider la case visuelle du banc
-            banc.RemoveFromBanc(cible);
-            // On le retire de la liste passée en paramètre
             championBanc.Remove(cible);
         }
+
+        // 3. NETTOYAGE DU BANC (VISUEL)
+        banc.RemoveFromBanc(cible);
+        
+        // 4. MISE À JOUR DES SYNERGIES
+        map.ActualiserNbOrigin(championMap);
     }
 }

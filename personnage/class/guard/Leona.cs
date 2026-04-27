@@ -7,7 +7,7 @@ public class Leona : Guard
 
     public override char GetSymbol()
     {
-        return 'L';
+        return 'l';
     }
 
     public override void UpgradeStats()

@@ -5,7 +5,7 @@ public static class GameManager
     public static int nbNoble{get;set;} = 0;
     public static int nbSauvage{get;set;} = 0;
 
-    public static int Money{get;set;} = 10;
+    public static int Money{get;set;} = 5;
 
     public static void ResetCounter()
     {
