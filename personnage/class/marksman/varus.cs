@@ -1,6 +1,6 @@
 public class Varus : MarksMan
 {
-    public Varus() : base("Varus",60,900,40,5,new Sauvage(),3 )
+    public Varus() : base("Varus",60,900,40,5,new Sauvage(),4 )
     {
         this.resourceBar = new ResourceBar(ResourceBar.ResourceType.Mana,15,85);        
     }
