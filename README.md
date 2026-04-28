@@ -1,35 +1,60 @@
-Dans ces premières avancées j'ai développer la classe du champion en revanche il faudrait que je redefinisse bien la maniere dont j'attaque et ce qu'il se passe si je ne peux pas attaquer a cause de la portée(marcher vers l'ennemi le plus proche (pourquoi pas utiliser un algorithme de tri))
+** TFT Console Edition - C#
+Bienvenue dans cette version simplifiée et optimisée de Teamfight Tactics, développée entièrement en C# pour le terminal. Gérez votre économie, placez vos unités et devenez le dernier survivant !
 
-avant de penser a cela les prochaines choses a faire sont de créer les differentes nouvelles classes pour pouvoir par la suite amelierorer la classe champion avec les differentes features appropriés
+** Déroulement de la partie
 
-10/05/2026
--mise en place des champions dans la classe wizard
--rajout de la resource bar et de son affichage 
--A faire ensuite , faire les constructeur de tous les personnages 
+*1. Initialisation
 
+  Chaque joueur (vous et l'IA) débute avec 100 PV.
+  
+  Un champion aléatoire vous est attribué au départ.
+  
+  Vous devez le placer sur le terrain avant de lancer votre premier affrontement.
+  
+*2. Phase de Préparation & Boutique
 
-11/05/2026:
+  C'est le moment de bâtir votre stratégie. 5 champions sont proposés aléatoirement dans le shop :
+  
+  Achat : Utilisez votre or pour recruter des unités.
+  
+  Vente : Vous pouvez revendre vos champions (à condition d'en garder au moins un).
+  
+  Refresh : Si la sélection ne vous convient pas, vous pouvez rafraîchir la boutique.
+  
+  Statistiques : Appuyez sur la touche C pour analyser les forces, faiblesses et Origines de vos troupes.
 
--tous les constructeurs ont étés mis en place maintenant 
--il faut mettre en place les differentes manières d'attaquer pour les personnages 
--mettre en place les différentes synergies et pour le moment l'adapter au fait qu'on est uniquement deux personnages par classe et par origine 
+*3. Phase de Combat
 
-15/05/2026:
+  Les combats sont automatiques. L'issue dépend de vos statistiques et de votre placement :
+  
+  Victoire : Vous infligez des dégâts à l'adversaire et gagnez un montant d'or important.
+  
+  Défaite : Vous gagnez un montant d'or réduit et perdez des PV selon le nombre d'unités ennemies encore en vie.
 
--la map et l'actualisations du nombres uniques de personnages de certaines origines ont etes mis en place 
--la creation du banc a été faite 
--il faudrait maintenant mettre en place le shop pour pouvoir acheter des champions et les mettre sur le banc (pourquoi pas le faire avec Type T )
+** Mécaniques Avancées
 
-18/05/2026:
--le système de shop a été mis en place 
--j'ai aussi mis en place les bonus des origines et leur actualisation, il faut les specifier maintenant car tous ont le meme bonus 
+* Système de Fusion : Obtenez trois exemplaires du même champion et du même niveau pour qu'ils fusionnent automatiquement. Le champion résultant monte en niveau (Star Level) et voit ses statistiques boostées.
 
--pour la suite il faut implementer le systeme de niveau apres avoir fini les synergies.
+* Système de Butin (Loot) : À chaque victoire, vous avez une chance de gagner un objet. Équipez-le sur vos champions pour leur donner un avantage décisif.
 
-18/05/2026(encore):
--tous les bonus de stats ont été mis en place ainsi que le systeme de niveau 
--maintenant il faut implémenter le systeme d'attaque 
--il faudra aussi implementer les objets avec les interfaces 
+* Synergies d'Origines : Regroupez des personnages de la même origine pour débloquer des bonus passifs cumulables.
 
-21/05/2026:
--tout a été fait il manque juste la boucle de jeu et le projet est fini
+* Conseils Tactiques
+  Le Placement est la clé :
+  
+  Placez vos Tanks (Guard) en première ligne pour encaisser les dégâts.
+  
+  Protégez vos Snipers (Marksman) et Mages (Wizard) à l'arrière pour qu'ils puissent attaquer en toute sécurité.
+
+* Installation et Lancement
+Clonez le dépôt.
+
+Ouvrez le projet dans Visual Studio ou VS Code.
+
+Compilez et lancez le projet :
+
+Bash
+dotnet run
+Suivez les instructions affichées dans le terminal.
+
+Projet réalisé par Crouzet Hugo.
