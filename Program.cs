@@ -41,7 +41,7 @@ static void GererPlacementJoueur(Joueur j, Map map, Gameloop loop, int numeroMan
         Console.WriteLine("Options : [P] Placer | [D] Déplacer | [B] Banc | [I] Inventaire | [C]Catalogue | [V] Valider");    
         string choix = Console.ReadLine()?.ToUpper();
 
-        if (choix == "P") { //placer un personnage
+        if (choix == "P") { // Placer un personnage
             if (map.ListeChampion.Count >= numeroManche) {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"[LIMITE] Vous ne pouvez placer que {numeroManche} champions !");
@@ -49,15 +49,23 @@ static void GererPlacementJoueur(Joueur j, Map map, Gameloop loop, int numeroMan
                 System.Threading.Thread.Sleep(1000);
                 continue;
             }
-            if (map.Banc.ListeChampionBanc.Count == 0) continue;
 
-            Console.WriteLine($"Index du champion sur le BANC (1 à {map.Banc.ListeChampionBanc.Count}) :");
-            if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= map.Banc.ListeChampionBanc.Count) {
-                Champion choisi = map.Banc.ListeChampionBanc[idx - 1];
-                map.Banc.RemoveFromBanc(choisi); 
-                loop.DeplacerAuClavier(choisi, map); 
-                if (!map.ListeChampion.Contains(choisi)) map.ListeChampion.Add(choisi);
-                map.ActualiserNbOrigin(map.ListeChampion);
+            // On demande l'index visuel (1 à 9)
+            Console.WriteLine($"Index de la case sur le BANC (1 à 9) :");
+            if (int.TryParse(Console.ReadLine(), out int idx)) {
+                
+                // On va chercher le perso à l'emplacement EXACT du tableau
+                Champion choisi = map.Banc.GetChampionAt(idx - 1); 
+
+                if (choisi != null) {
+                    map.Banc.RemoveFromBanc(choisi); 
+                    loop.DeplacerAuClavier(choisi, map); 
+                    if (!map.ListeChampion.Contains(choisi)) map.ListeChampion.Add(choisi);
+                    map.ActualiserNbOrigin(map.ListeChampion);
+                } else {
+                    Console.WriteLine("Cette case du banc est vide !");
+                    System.Threading.Thread.Sleep(1000);
+                }
             }
         }
         else if (choix == "D" || choix == "B") {// deplacer un champion du banc vers le plateau et inversemet
