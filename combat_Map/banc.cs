@@ -4,8 +4,20 @@ public class Banc
     private int _heightBanc;
     private Champion[,] _banc;
 
-    public List<Champion> ListeChampionBanc = new List<Champion>();
+    public List<Champion> ListeChampionBanc => _banc.Cast<Champion>().Where(c => c != null).ToList();
 
+    public void PlaceChampionBanc(Champion cible)
+    {
+        for (int i = 0; i < _banc.GetLength(0); i++)
+        {
+            if (_banc[i, 0] == null)
+            {
+                _banc[i, 0] = cible;
+                return;
+            }
+        }
+        throw new GameRuleException("Votre banc est plein !");
+    }
     public Banc()
     {
         _heightBanc = 1;
@@ -29,7 +41,7 @@ public class Banc
         Console.WriteLine("");
     }
 
-    public void PlaceChampionBanc(Champion cible)
+    /*public void PlaceChampionBanc(Champion cible)
     {
         if (_banc.Cast<Champion>().Any(c => c == null) == true)
         {
@@ -48,17 +60,21 @@ public class Banc
         {
             throw new GameRuleException($"Votre banc est plein !!!! Veuillez vendre certains de vos champions pour liberer de l'espace sur votre banc .");
         }
-    }
+    }*/
     public void RemoveFromBanc(Champion cible)
     {
         for (int i = 0; i < _banc.GetLength(0); i++)
         {
             if (_banc[i, 0] == cible)
             {
-                _banc[i, 0] = null; // On libère la place
-                ListeChampionBanc.Remove(cible);
+                _banc[i, 0] = null;
                 return; 
             }
         }
+    }
+    public Champion GetChampionAt(int index)
+    {
+        if (index >= 0 && index < _banc.GetLength(0)) return _banc[index, 0];
+        return null;
     }
 }

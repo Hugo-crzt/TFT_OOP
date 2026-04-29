@@ -17,7 +17,7 @@ public abstract class Champion
     public int Esquive;
     public int X{get; set;} //gerer les coordonnées du joueur
     public int Y{get; set;}
-    public ResourceBar resourceBar {get;set;} //le ? est fait pour ignorer le fait qu'on puisse avoir une valeur nulle 
+    public ResourceBar resourceBar {get;set;} 
 
 
     public Origin Origine{get;set;}
