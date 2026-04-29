@@ -76,7 +76,6 @@ public class Shop
         while (!check)
         {
             map.display(); 
-            banc.displayBanc(); // important de voir son banc avant d'acheter/vendre
             displayShop(); 
             
             Console.WriteLine("Entrez une option :");
